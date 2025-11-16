@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spilit - Lesson 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background: #1a1a1a;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar h1 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        /* Left Panel - Lesson */
+        .lesson-panel {
+            width: 40%;
+            background: #1a1a1a;
+            padding: 2rem;
+            overflow-y: auto;
+            border-right: 1px solid #333;
+        }
+        .lesson-header {
+            margin-bottom: 2rem;
+        }
+        .lesson-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .lesson-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .lesson-content {
+            line-height: 1.6;
+        }
+        .lesson-content h2 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+            color: #fff;
+        }
+        .lesson-content p {
+            margin-bottom: 1rem;
+            color: #b0b0b0;
+        }
+        .lesson-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .lesson-content li {
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+        }
+        
+        /* Right Panel - Chat */
+        .chat-panel {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            background: #0f0f0f;
+        }
+        .chat-header {
+            padding: 1.5rem 2rem;
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+        .chat-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+            white-space: pre-wrap;
+        }
+        .chat-input-area {
+            padding: 1.5rem 2rem;
+            background: #1a1a1a;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 1rem;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .chat-input-area input:focus {
+            outline: none;
+            border-color: #666;
+        }
+        .chat-input-area button {
+            padding: 0.75rem 2rem;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .chat-input-area button:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Auth Gate */
+        .auth-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .auth-gate-content {
+            text-align: center;
+            max-width: 400px;
+            padding: 2rem;
+        }
+        .auth-gate-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .auth-gate-content p {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Gate (shown when not signed in) -->
+    <div id="authGate" class="auth-gate">
+        <div class="auth-gate-content">
+            <h1>🔥 Spilit</h1>
+            <p>Your AI education companion</p>
+            <div id="clerk-signin"></div>
+        </div>
+    </div>
+
+    <!-- Main App (shown when signed in) -->
+    <div id="mainApp" style="display: none; height: 100vh; display: flex; flex-direction: column;">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <h1>🔥 Spilit</h1>
+            <div id="clerk-user-button"></div>
+        </div>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Left Panel: Lesson -->
+            <div class="lesson-panel">
+                <div class="lesson-header">
+                    <div class="lesson-title">Lesson 1: The 3 Ps</div>
+                    <div class="lesson-subtitle">Level 1 • Foundation</div>
+                </div>
+                <div class="lesson-content">
+                    <h2>Your Mission</h2>
+                    <p>Every great AI product starts with clarity. Before you build anything, you need to answer one fundamental question:</p>
+                    <p><strong>What problem are you solving, and for whom?</strong></p>
+                    
+                    <h2>The 3 Ps Framework</h2>
+                    <p>Use this framework to discover your idea:</p>
+                    <ul>
+                        <li><strong>Pain:</strong> What frustrates people? What wastes their time or money?</li>
+                        <li><strong>Profession:</strong> What industry or role do you understand deeply?</li>
+                        <li><strong>Passion:</strong> What excites you enough to work on it for years?</li>
+                    </ul>
+                    
+                    <h2>Your Task</h2>
+                    <p>Chat with Spilit to explore these three areas. Be honest and specific.</p>
+                    <p>When Spilit understands your idea clearly, you'll take a quiz to move forward.</p>
+                </div>
+            </div>
+
+            <!-- Right Panel: Chat -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <h2>SpilitChat</h2>
+                </div>
+                <div class="chat-messages" id="messages"></div>
+                <div class="chat-input-area">
+                    <input id="userInput" type="text" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clerk Frontend SDK -->
+    <script
+        async
+        crossorigin="anonymous"
+        data-clerk-publishable-key="pk_test_bWVycnktb2NlbG90LTg0LmNsZXJrLmFjY291bnRzLmRldiQ"
+        src="https://merry-ocelot-84.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+        type="text/javascript"
+    ></script>
+
+    <script>
+        window.addEventListener("load", async function () {
+            await Clerk.load();
+            
+            if (Clerk.user) {
+                // User is signed in
+                document.getElementById("authGate").style.display = "none";
+                document.getElementById("mainApp").style.display = "flex";
+                
+                // Mount user button
+                Clerk.mountUserButton(document.getElementById("clerk-user-button"));
+            } else {
+                // User is NOT signed in
+                document.getElementById("authGate").style.display = "flex";
+                document.getElementById("mainApp").style.display = "none";
+                
+                // Mount sign-in component
+                Clerk.mountSignIn(document.getElementById("clerk-signin"));
+            }
+        });
+
+        async function sendMessage() {
+            const input = document.getElementById("userInput").value;
+            if (!input.trim()) return;
+            document.getElementById("userInput").value = "";
+            
+            // Display user message
+            const msgBox = document.getElementById("messages");
+            msgBox.textContent += "You: " + input + "\n\n";
+            
+            try {
+                // Get Clerk session token
+                const token = await Clerk.session.getToken();
+                
+                // Dynamic API URL based on environment
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:3000/api/chat'
+                    : 'https://spilit-api.onrender.com/api/chat';
+                
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ message: input })
+                });
+                const data = await response.json();
+                msgBox.textContent += "Spilit: " + data.reply + "\n\n";
+                msgBox.scrollTop = msgBox.scrollHeight;
+            } catch (err) {
+                msgBox.textContent += "ERROR: Could not reach server.\n\n";
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
