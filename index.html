@@ -1,144 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spilit - Lesson 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spilit - AI Education Platform</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
             color: #e0e0e0;
-        }
-        
-        /* Top Bar */
-        .top-bar {
-            background: #1a1a1a;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .top-bar h1 {
-            font-size: 1.5rem;
-            color: #fff;
-        }
-        
-        /* Main Container */
-        .main-container {
-            flex: 1;
-            display: flex;
             overflow: hidden;
-        }
-        
-        /* Left Panel - Lesson */
-        .lesson-panel {
-            width: 40%;
-            background: #1a1a1a;
-            padding: 2rem;
-            overflow-y: auto;
-            border-right: 1px solid #333;
-        }
-        .lesson-header {
-            margin-bottom: 2rem;
-        }
-        .lesson-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-        .lesson-subtitle {
-            font-size: 0.9rem;
-            color: #888;
-        }
-        .lesson-content {
-            line-height: 1.6;
-        }
-        .lesson-content h2 {
-            font-size: 1.3rem;
-            margin: 1.5rem 0 1rem 0;
-            color: #fff;
-        }
-        .lesson-content p {
-            margin-bottom: 1rem;
-            color: #b0b0b0;
-        }
-        .lesson-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .lesson-content li {
-            margin-bottom: 0.5rem;
-            color: #b0b0b0;
-        }
-        
-        /* Right Panel - Chat */
-        .chat-panel {
-            width: 60%;
-            display: flex;
-            flex-direction: column;
-            background: #0f0f0f;
-        }
-        .chat-header {
-            padding: 1.5rem 2rem;
-            background: #1a1a1a;
-            border-bottom: 1px solid #333;
-        }
-        .chat-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #fff;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #e0e0e0;
-            white-space: pre-wrap;
-        }
-        .chat-input-area {
-            padding: 1.5rem 2rem;
-            background: #1a1a1a;
-            border-top: 1px solid #333;
-            display: flex;
-            gap: 1rem;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: #2a2a2a;
-            border: 1px solid #444;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 1rem;
-        }
-        .chat-input-area input:focus {
-            outline: none;
-            border-color: #666;
-        }
-        .chat-input-area button {
-            padding: 0.75rem 2rem;
-            background: #fff;
-            color: #000;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .chat-input-area button:hover {
-            background: #e0e0e0;
         }
         
         /* Auth Gate */
@@ -148,89 +26,362 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
+        
         .auth-gate-content {
             text-align: center;
-            max-width: 400px;
-            padding: 2rem;
+            max-width: 500px;
+            padding: 3rem;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
+        
         .auth-gate-content h1 {
-            font-size: 2.5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-gate-content p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        #clerk-signin {
+            margin-top: 2rem;
+        }
+        
+        /* Main App Container */
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Top Navigation Bar */
+        .top-bar {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 2.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        /* Left Panel - Lesson */
+        .lesson-panel {
+            width: 40%;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lesson-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .lesson-panel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .lesson-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .lesson-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .lesson-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .lesson-subtitle {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 2.5rem;
+        }
+        
+        .lesson-content {
+            line-height: 1.8;
+        }
+        
+        .lesson-content h2 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .lesson-content p {
+            margin-bottom: 1.25rem;
+            color: #c0c0c0;
+            font-size: 1.05rem;
+        }
+        
+        .lesson-content strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .lesson-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .lesson-content li {
+            margin-bottom: 0.75rem;
+            color: #c0c0c0;
+            font-size: 1.05rem;
+        }
+        
+        /* Right Panel - Chat */
+        .chat-panel {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            background: rgba(15, 15, 30, 0.8);
+        }
+        
+        .chat-header {
+            padding: 2rem 2.5rem;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chat-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
             color: #fff;
         }
-        .auth-gate-content p {
-            font-size: 1.1rem;
-            color: #888;
-            margin-bottom: 2rem;
+        
+        .chat-messages {
+            flex: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+            white-space: pre-wrap;
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .chat-input-container {
+            padding: 2rem 2.5rem;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .chat-input-wrapper input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-input-wrapper input:focus {
+            outline: none;
+            border-color: rgba(255, 107, 107, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.1);
+        }
+        
+        .chat-input-wrapper input::placeholder {
+            color: #666;
+        }
+        
+        .chat-input-wrapper button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .chat-input-wrapper button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .chat-input-wrapper button:active {
+            transform: translateY(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .lesson-panel {
+                width: 45%;
+            }
+            .chat-panel {
+                width: 55%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .lesson-panel, .chat-panel {
+                width: 100%;
+            }
+            .lesson-panel {
+                max-height: 40vh;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Auth Gate (shown when not signed in) -->
+    <!-- Auth Gate -->
     <div id="authGate" class="auth-gate">
         <div class="auth-gate-content">
-            <h1>🔥 Spilit</h1>
-            <p>Your AI education companion</p>
+            <h1>🔥</h1>
+            <h2 style="font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem;">Spilit</h2>
+            <p>Your AI-powered education companion for building the future</p>
             <div id="clerk-signin"></div>
         </div>
     </div>
 
-    <!-- Main App (shown when signed in) -->
-    <div id="mainApp" style="display: none; height: 100vh; display: flex; flex-direction: column;">
+    <!-- Main App -->
+    <div id="mainApp" class="app-container" style="display: none;">
         <!-- Top Bar -->
         <div class="top-bar">
-            <h1>🔥 Spilit</h1>
+            <div class="logo">
+                <span>🔥</span>
+                <span>Spilit</span>
+            </div>
             <div id="clerk-user-button"></div>
         </div>
 
-        <!-- Main Container -->
-        <div class="main-container">
+        <!-- Main Content -->
+        <div class="main-content">
             <!-- Left Panel: Lesson -->
             <div class="lesson-panel">
-                <div class="lesson-header">
-                    <div class="lesson-title">Lesson 1: The 3 Ps</div>
-                    <div class="lesson-subtitle">Level 1 • Foundation</div>
-                </div>
+                <div class="lesson-badge">LEVEL 1 • FOUNDATION</div>
+                <div class="lesson-title">The 3 Ps Framework</div>
+                <div class="lesson-subtitle">Discover your breakthrough idea</div>
+                
                 <div class="lesson-content">
-                    <h2>Your Mission</h2>
+                    <h2>🎯 Your Mission</h2>
                     <p>Every great AI product starts with clarity. Before you build anything, you need to answer one fundamental question:</p>
                     <p><strong>What problem are you solving, and for whom?</strong></p>
                     
-                    <h2>The 3 Ps Framework</h2>
-                    <p>Use this framework to discover your idea:</p>
+                    <h2>🔥 The 3 Ps Framework</h2>
+                    <p>Use this proven framework to discover your breakthrough idea:</p>
                     <ul>
-                        <li><strong>Pain:</strong> What frustrates people? What wastes their time or money?</li>
-                        <li><strong>Profession:</strong> What industry or role do you understand deeply?</li>
-                        <li><strong>Passion:</strong> What excites you enough to work on it for years?</li>
+                        <li><strong>Pain:</strong> What frustrates people? What wastes their time or money? What keeps them up at night?</li>
+                        <li><strong>Profession:</strong> What industry or role do you understand deeply? Where do you have insider knowledge?</li>
+                        <li><strong>Passion:</strong> What excites you enough to work on it for years? What problem would you solve even if you weren't paid?</li>
                     </ul>
                     
-                    <h2>Your Task</h2>
-                    <p>Chat with Spilit to explore these three areas. Be honest and specific.</p>
-                    <p>When Spilit understands your idea clearly, you'll take a quiz to move forward.</p>
+                    <h2>✨ Your Task</h2>
+                    <p>Chat with Spilit to explore these three areas. Be honest and specific. The AI will guide you through discovering your unique opportunity.</p>
+                    <p>When Spilit confirms it understands your idea, you'll take a quick quiz to solidify your thinking and unlock the next lesson.</p>
                 </div>
             </div>
 
             <!-- Right Panel: Chat -->
             <div class="chat-panel">
                 <div class="chat-header">
-                    <h2>SpilitChat</h2>
+                    <h2>💬 SpilitChat</h2>
                 </div>
                 <div class="chat-messages" id="messages"></div>
-                <div class="chat-input-area">
-                    <input id="userInput" type="text" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendMessage()">
-                    <button onclick="sendMessage()">Send</button>
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input 
+                            id="userInput" 
+                            type="text" 
+                            placeholder="Type your message..." 
+                            onkeypress="if(event.key==='Enter') sendMessage()"
+                            autocomplete="off"
+                        >
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Clerk Frontend SDK -->
+    <!-- Clerk SDK -->
     <script
         async
         crossorigin="anonymous"
@@ -244,18 +395,12 @@
             await Clerk.load();
             
             if (Clerk.user) {
-                // User is signed in
                 document.getElementById("authGate").style.display = "none";
                 document.getElementById("mainApp").style.display = "flex";
-                
-                // Mount user button
                 Clerk.mountUserButton(document.getElementById("clerk-user-button"));
             } else {
-                // User is NOT signed in
                 document.getElementById("authGate").style.display = "flex";
                 document.getElementById("mainApp").style.display = "none";
-                
-                // Mount sign-in component
                 Clerk.mountSignIn(document.getElementById("clerk-signin"));
             }
         });
@@ -265,18 +410,12 @@
             if (!input.trim()) return;
             document.getElementById("userInput").value = "";
             
-            // Display user message
             const msgBox = document.getElementById("messages");
             msgBox.textContent += "You: " + input + "\n\n";
             
             try {
-                // Get Clerk session token
                 const token = await Clerk.session.getToken();
-                
-                // Dynamic API URL based on environment
-                const apiUrl = window.location.hostname === 'localhost' 
-                    ? 'http://localhost:3000/api/chat'
-                    : 'https://spilit-api.onrender.com/api/chat';
+                const apiUrl = '/api/chat';
                 
                 const response = await fetch(apiUrl, {
                     method: "POST",
@@ -286,6 +425,7 @@
                     },
                     body: JSON.stringify({ message: input })
                 });
+                
                 const data = await response.json();
                 msgBox.textContent += "Spilit: " + data.reply + "\n\n";
                 msgBox.scrollTop = msgBox.scrollHeight;
