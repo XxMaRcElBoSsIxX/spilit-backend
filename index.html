@@ -414,14 +414,10 @@
             msgBox.textContent += "You: " + input + "\n\n";
             
             try {
-                const token = await Clerk.session.getToken();
-                const apiUrl = '/api/chat';
-                
-                const response = await fetch(apiUrl, {
+                const response = await fetch("https://spilit-backend.onrender.com/api/chat", {
                     method: "POST",
                     headers: { 
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({ message: input })
                 });
