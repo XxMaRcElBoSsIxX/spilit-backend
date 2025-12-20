@@ -11,6 +11,7 @@ app.post("/api/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
     console.log("Received message:", userMessage);
+    console.log("Using API key:", process.env.GROQ_API_KEY?.substring(0, 10) + "...");
 
     const response = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -33,7 +34,7 @@ app.post("/api/chat", async (req, res) => {
     res.json({ reply });
   } catch (error) {
     console.error("Groq ERROR:", error.response?.data || error.message);
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+    res.status(500).json({ error: error.response?.data || "Unknown error" });
   }
 });
 
