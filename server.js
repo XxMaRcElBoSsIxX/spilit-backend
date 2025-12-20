@@ -33,7 +33,7 @@ app.post("/api/chat", async (req, res) => {
     res.json({ reply });
   } catch (error) {
     console.error("Groq ERROR:", error.response?.data || error.message);
-    res.status(500).json({ error: error.response?.data || "Unknown error" });
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   }
 });
 
